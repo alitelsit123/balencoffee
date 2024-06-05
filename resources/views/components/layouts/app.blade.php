@@ -102,7 +102,7 @@
                     </li> --}}
 
                     <li class="nav-item">
-                      <a href="{{url('admin')}}" class="nav-link">
+                      <a href="{{url('logout')}}" class="nav-link">
                         <i class="nav-icon bi bi-box-arrow-in-left"></i>
                         <p>Logout</p>
                       </a>
