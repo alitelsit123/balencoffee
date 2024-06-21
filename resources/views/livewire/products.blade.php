@@ -8,10 +8,16 @@
                 <h5 class="font-weight-semi-bold mb-4">Kategori</h5>
                 <form>
                   @foreach (\App\Models\Category::all() as $row)
+                  <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3"
+                    >
+                    <input type="checkbox" class="custom-control-input" id="price{{$row->id}}" @change="
+                    $wire.category({{$row->id}})
+                    "
                     @if(in_array($row->id, $categoryIds))
-                    checked=""
+                    checked
                     @endif
                     >
+
                     <label class="custom-control-label" for="price{{$row->id}}">{{$row->name}}</label>
                     <span class="badge border font-weight-normal">{{$row->products()->count()}}</span>
                   </div>

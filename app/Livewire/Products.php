@@ -17,10 +17,12 @@ class Products extends Component
     } else {
       $key = array_search($id, $this->categoryIds);
       if ($key !== false) {
-          unset($this->categoryIds[$key]);
-          $this->categoryIds = array_values($this->categoryIds);
+          $t = $this->categoryIds;
+          unset($t[$key]);
+          $this->categoryIds = array_values($t);
       }
     }
+    $this->dispatch('reloadproducts')->self();
   }
   public function reloadCart() {
     $this->product_carts = \App\Models\Cart::whereUser_id(auth()->id())->get()->pluck('product_id')->toArray();
@@ -49,6 +51,7 @@ class Products extends Component
   }
   public function mount() {
     $this->reloadCart();
+    $this->categoryIds = \App\Models\Category::all()->pluck('id')->toArray();
   }
   #[On('reloadproducts')]
   public function render()
@@ -59,6 +62,8 @@ class Products extends Component
     })->when(sizeof($this->categoryIds) > 0, function($query) use ($categoryIdsR) {
       $query->whereIn('category_id', $categoryIdsR);
     })->paginate(9);
+
+    // dd(sizeof($this->categoryIds));
     return view('livewire.products',compact('products'))->layout('components.layouts.app-member');
   }
 }
