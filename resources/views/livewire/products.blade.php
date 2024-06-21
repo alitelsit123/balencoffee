@@ -5,11 +5,9 @@
         <div class="col-lg-3 col-md-12">
             <!-- Price Start -->
             <div class="border-bottom mb-4 pb-4">
-                <h5 class="font-weight-semi-bold mb-4">Filter by price</h5>
+                <h5 class="font-weight-semi-bold mb-4">Kategori</h5>
                 <form>
                   @foreach (\App\Models\Category::all() as $row)
-                  <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                    <input type="checkbox" class="custom-control-input" id="price{{$row->id}}" @change="$wire.category({{$row->id}})"
                     @if(in_array($row->id, $categoryIds))
                     checked=""
                     @endif
