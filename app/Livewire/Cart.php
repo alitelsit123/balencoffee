@@ -50,8 +50,9 @@ class Cart extends Component
         'delivery_address' => auth()->user()->address,
         'delivery_pinpoint' => auth()->user()->address_latlng,
         'subtotal' => $realsubtotal,
-        'total' => ($realsubtotal - $dcsubtotal) < 0 ? 0: ($realsubtotal - $dcsubtotal),
-        'confirmed_at' => null
+        'total' => (($realsubtotal - $dcsubtotal) < 0 ? 0: ($realsubtotal - $dcsubtotal)) + (ongkir(auth()->user()) ?? 0),
+        'confirmed_at' => null,
+        'ongkir' => (ongkir(auth()->user()) ?? 0)
       ]);
 
       $tx->detailProducts()->delete();
@@ -85,6 +86,14 @@ class Cart extends Component
         'description' => 'Coin +'.$cbsubtotal.' from cashback',
         'transaction_id' => $tx->id
       ]);
+
+      if (auth()->user()->canClaimCashback()) {
+        auth()->user()->coins()->create([
+          'amount' => defaultCashback($tx->subtotal),
+          'description' => 'Coin +'.$cbsubtotal.' from default cashback',
+          'transaction_id' => $tx->id
+        ]);
+      }
 
       auth()->user()->carts()->delete();
 

@@ -8,6 +8,7 @@ use Livewire\Attributes\Validate;
 
 class VoucherTable extends Component
 {
+  public $id;
   #[Validate('required')]
   public $nameCreate;
   #[Validate('required')]
@@ -34,7 +35,8 @@ class VoucherTable extends Component
   }
 
   public function setUpdate($id) {
-    $existingVoucher = \App\Models\Voucher::find($id);
+    $this->id = $id;
+    $existingVoucher = \App\Models\Voucher::find($this->id);
     $this->nameCreate = $existingVoucher->name;
     $this->codeCreate = $existingVoucher->code;
     $this->typeCreate = $existingVoucher->type;
@@ -45,16 +47,24 @@ class VoucherTable extends Component
     $this->stockCreate = $existingVoucher->stock;
   }
 
-  public function update($id) {
+  public function update() {
     $this->validate();
-    $existingVoucher = \App\Models\Voucher::where('code', $this->codeCreate)->where('id', '<>',$id)->first();
+    $existingVoucher = \App\Models\Voucher::where('code', $this->codeCreate)->where('id', '<>',$this->id)->first();
     if ($existingVoucher) {
       $this->dispatch('alert-error', message: "Voucher sudah ada!");
       return;
     }
-    \App\Models\Voucher::where(['id' => $id])->update([
-      'name' => $name
-    ]);
+    $existingVoucher = \App\Models\Voucher::find($this->id);
+    $existingVoucher->name = $this->nameCreate;
+    $existingVoucher->code = $this->codeCreate;
+    $existingVoucher->type = $this->typeCreate;
+    $existingVoucher->amount = $this->amountCreate;
+    $existingVoucher->stock = $this->stockCreate;
+    $existingVoucher->amount_type = $this->amountTypeCreate;
+    $existingVoucher->expired_at = $this->expiredAtCreate;
+    $existingVoucher->stock = $this->stockCreate;
+    $existingVoucher->save();
+
     $this->resetAttr();
     $this->dispatch('alert-success', message: "Voucher diupdate!");
     $this->dispatch('reloadtablevoucher')->self();

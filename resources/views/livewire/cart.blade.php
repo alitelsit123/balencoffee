@@ -198,6 +198,9 @@
               $availableVouchers = \App\Models\Voucher::where(function($query) use ($myVouchers) {
                 $query->whereNotIn('id', $myVouchers->pluck('id')->toArray())->whereNotIn('id', auth()->user()->usedVouchers->pluck('id')->toArray());
               })->get();
+              // $availableVouchers = \App\Models\Voucher::where(function($query) {
+              //   $query->whereNull('expired_at')->orWhere('expired_at', '>', now());
+              // })->get()
               @endphp
               <div class="mb-2" style="font-weight: 700;">({{$availableVouchers->count()}}) Voucher Tersedia</div>
               <button type="button" class="btn btn-primary mb-2 btn-block" data-toggle="modal" data-target="#all-voucher-modal">Lihat Semua Voucher</button>
@@ -369,11 +372,11 @@
 
                     <div class="d-flex justify-content-between">
                       <h6 class="font-weight-medium">Pengiriman</h6>
-                      <h6 class="font-weight-medium">Gratis</h6>
+                      <h6 class="font-weight-medium">Rp. {{number_format(ongkir(auth()->user()) ?? 0)}}</h6>
                     </div>
                     @php
                     $subtotalVoucher = $realsubtotal;
-                    $subtotal = $realsubtotal-$subtotalVoucher;
+                    $subtotal = ($realsubtotal-$subtotalVoucher);
                     $dcsubtotal += $subtotal;
                     @endphp
                     @if (auth()->user()->canClaimCashback())
@@ -381,7 +384,7 @@
                       <small class="mb-2 d-block">Voucher Member Permanent</small>
                       <div class="d-flex justify-content-between">
                         <h6 class="font-weight-medium"><strong>BALENCB50</strong></h6>
-                        <h6 class="font-weight-medium">Cashback Rp. {{number_format($subtotal)}}</h6>
+                        <h6 class="font-weight-medium">Cashback Rp. {{number_format(defaultCashback($subtotalVoucher))}}</h6>
                       </div>
                     @endif
                     @if ($myVouchers->count() > 0)
@@ -422,7 +425,7 @@
                 <div class="card-footer border-secondary bg-transparent">
                     <div class="d-flex justify-content-between mt-2">
                         <h5 class="font-weight-bold">Total</h5>
-                        <h5 class="font-weight-bold">{{number_format(($realsubtotal-$dcsubtotal < 0) ? 0: $realsubtotal-$dcsubtotal)}}</h5>
+                        <h5 class="font-weight-bold">{{number_format((($realsubtotal-$dcsubtotal < 0) ? 0: $realsubtotal-$dcsubtotal) + (ongkir(auth()->user()) ?? 0))}}</h5>
                     </div>
                     @if (auth()->user()->address && auth()->user()->address_latlng)
                     <button class="btn btn-block btn-primary my-3 py-3" wire:key="checkout" wire:loading.remove="btn-block" wire:target="checkout()" wire:click="checkout()">Checkout <i class="fas fa-arrow-right"></i></button>

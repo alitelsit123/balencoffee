@@ -20,19 +20,33 @@ class CreateSnapTokenService extends Midtrans
         $invoiceId = $this->transaction->id.time();
         $this->transaction->provider_id = $invoiceId;
         $this->transaction->save();
+        $items = $this->transaction->detailProducts->map(function($item) {
+          return [
+            'id' => $item->product->id,
+            'price' => $item->product->price,
+            'quantity' => $item->quantity,
+            'name' => $item->product->name,
+          ];
+        })->push([
+          'id' => '#ONGKIR',
+          'price' => $this->transaction->ongkir,
+          'quantity' => 1,
+          'name' => 'Ongkos Kirim',
+        ]);
+        if (($this->transaction->ongkir + $this->transaction->subtotal) - $this->transaction->total > 0) {
+          $items = $items->push([
+            'id' => '#DISCOUNT',
+            'price' => -abs(($this->transaction->ongkir + $this->transaction->subtotal) - $this->transaction->total),
+            'quantity' => 1,
+            'name' => 'Diskon',
+          ]);
+        }
         $params = [
             'transaction_details' => [
                 'order_id' => $invoiceId,
                 'gross_amount' => $this->transaction->total,
             ],
-            'item_details' => $this->transaction->detailProducts->map(function($item) {
-              return [
-                'id' => $item->product->id,
-                'price' => $item->product->price,
-                'quantity' => $item->quantity,
-                'name' => $item->product->name,
-              ];
-            }),
+            'item_details' => $items,
             'customer_details' => [
                 'first_name' => auth()->user()->name,
                 'email' => auth()->user()->email,

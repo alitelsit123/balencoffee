@@ -247,16 +247,34 @@
                                 <div class=" p-2">
                                   <p>
                                     Gross Total<br>
+                                    @if ($transaction->detailVouchers()->whereType('discount')->sum('amount') > 0)
                                     Diskon<br>
+                                    @endif
+                                    @if ($transaction->detailVouchers()->whereType('cashback')->sum('amount') > 0)
                                     Cashback<br>
+                                    @endif
+                                    @if (auth()->user()->canClaimCashback())
+                                    Cashback Permanen<br>
+                                    @endif
+                                    Ongkir<br>
                                   </p>
                                   <h5 class=""><strong>Grand Total</strong></h5>
                                 </div>
                                 <div class=" p-2">
                                   <p>
                                     Rp. {{number_format($transaction->subtotal)}}<br>
+                                    @if ($transaction->detailVouchers()->whereType('discount')->sum('amount') > 0)
                                     Rp. -{{$transaction->detailVouchers()->whereType('discount')->sum('amount')}}<br>
+                                    @endif
+                                    @if ($transaction->detailVouchers()->whereType('cashback')->sum('amount') > 0)
                                     Rp. {{$transaction->detailVouchers()->whereType('cashback')->sum('amount')}}<br>
+                                    @endif
+                                    @if (auth()->user()->canClaimCashback())
+                                      @if ($transaction->coins()->whereStatus('pending')->whereAmount(defaultCashback($transaction->subtotal))->first())
+                                      Rp. {{number_format($transaction->coins()->whereStatus('pending')->whereAmount(defaultCashback($transaction->subtotal))->first()->amount)}}<br>
+                                      @endif
+                                    @endif
+                                    Rp. {{number_format($transaction->ongkir)}}<br>
                                   </p>
                                   <h5 class=""><strong>Rp. {{number_format($transaction->total)}}</strong></h5>
                                 </div>

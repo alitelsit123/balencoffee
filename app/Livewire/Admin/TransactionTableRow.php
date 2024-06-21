@@ -19,9 +19,21 @@ class TransactionTableRow extends Component
     $this->tx->save();
   }
   public function updatedStatus() {
+    if ($this->status == 'settlement' && $this->tx->user->canClaimCashback()) {
+      $this->tx->user->update([
+        'last_cashback_at' => now()
+      ]);
+    }
     $this->tx->status = $this->status;
     $this->tx->save();
-    $this->dispatch('tx-updated')->to(TransactionTable::class);
+    if ($this->tx->status == 'settlement') {
+      $this->tx->coins()->update([
+        'status' => 'settlement'
+      ]);
+      $this->dispatch('alert-success', message: "Transaksi berhasil diselesaikan! Koin telah diberikan!");
+    } else {
+      $this->dispatch('tx-updated')->to(TransactionTable::class);
+    }
   }
   public function mount($id) {
     $this->tx = \App\Models\Transaction::findOrFail($id);

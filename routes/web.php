@@ -36,4 +36,5 @@ Route::prefix('admin')->group(function() {
   Route::get('category', \App\Livewire\Admin\Category::class);
   Route::get('voucher', \App\Livewire\Admin\Voucher::class);
   Route::get('transaction', \App\Livewire\Admin\Transaction::class);
+  Route::get('information', \App\Livewire\Admin\ShopInfo::class);
 });

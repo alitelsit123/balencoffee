@@ -105,16 +105,30 @@
                                     <div class=" p-2">
                                       <p>
                                         Gross Total<br>
+                                        @if ($tx->detailVouchers()->whereType('discount')->sum('amount') > 0)
                                         Diskon<br>
+                                        @endif
+                                        @if ($tx->detailVouchers()->whereType('cashback')->sum('amount') > 0)
                                         Cashback<br>
+                                        @endif
+                                        @if (auth()->user()->canClaimCashback())
+                                        Cashback Permanen<br>
+                                        @endif
                                       </p>
                                       <h5 class=""><strong>Grand Total</strong></h5>
                                     </div>
                                     <div class=" p-2">
                                       <p>
                                         Rp. {{number_format($tx->subtotal)}}<br>
+                                        @if ($tx->detailVouchers()->whereType('discount')->sum('amount') > 0)
                                         Rp. -{{$tx->detailVouchers()->whereType('discount')->sum('amount')}}<br>
+                                        @endif
+                                        @if ($tx->detailVouchers()->whereType('cashback')->sum('amount') > 0)
                                         Rp. {{$tx->detailVouchers()->whereType('cashback')->sum('amount')}}<br>
+                                        @endif
+                                        @if (auth()->user()->canClaimCashback())
+                                        Rp. {{number_format(defaultCashback($tx->subtotal))}}<br>
+                                        @endif
                                       </p>
                                       <h5 class=""><strong>Rp. {{number_format($tx->total)}}</strong></h5>
                                     </div>

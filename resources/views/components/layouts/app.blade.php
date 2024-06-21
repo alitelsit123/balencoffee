@@ -62,35 +62,42 @@
                 <nav class="mt-2"> <!--begin::Sidebar Menu-->
                   <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
                     <li class="nav-item">
-                      <a href="{{url('admin')}}" class="nav-link">
+                      <a href="{{url('admin')}}" wire:navigate class="nav-link">
                         <i class="nav-icon bi bi-speedometer"></i>
                         <p>Dashboard</p>
                       </a>
                     </li>
                     <li class="nav-item">
-                      <a href="{{url('admin/category')}}" class="nav-link">
+                      <a href="{{url('admin/category')}}" wire:navigate class="nav-link">
                         <i class="nav-icon bi bi-table"></i>
                         <p>Kategori</p>
                       </a>
                     </li>
                     <li class="nav-item">
-                      <a href="{{url('admin/product')}}" class="nav-link">
+                      <a href="{{url('admin/product')}}" wire:navigate class="nav-link">
                         <i class="nav-icon bi bi-box-seam-fill"></i>
                         <p>Produk</p>
                       </a>
                     </li>
 
                     <li class="nav-item">
-                      <a href="{{url('admin/voucher')}}" class="nav-link">
+                      <a href="{{url('admin/voucher')}}" wire:navigate class="nav-link">
                         <i class="nav-icon bi bi-star-half"></i>
                         <p>Voucher / Kupon</p>
                       </a>
                     </li>
 
                     <li class="nav-item">
-                      <a href="{{url('admin/transaction')}}" class="nav-link">
+                      <a href="{{url('admin/transaction')}}" wire:navigate class="nav-link">
                         <i class="nav-icon bi bi-clipboard-fill"></i>
                         <p>Transaksi</p>
+                      </a>
+                    </li>
+
+                    <li class="nav-item">
+                      <a href="{{url('admin/information')}}" wire:navigate class="nav-link">
+                        <i class="nav-icon bi bi-clipboard-fill"></i>
+                        <p>Informasi</p>
                       </a>
                     </li>
 

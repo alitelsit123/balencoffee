@@ -9,6 +9,12 @@ class ProfilePhoto extends Component
 {
   use WithFileUploads;
   public $photoCreate;
+  public function updatedPhotoCreate() {
+    $path = $this->photoCreate->store(path: 'public/profile');
+    $user = auth()->user();
+    $user->photo = str_replace('public/','',$path);
+    $user->save();
+  }
   public function cancelUpload() {
     $this->photoCreate = null;
   }

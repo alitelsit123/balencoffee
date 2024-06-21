@@ -19,7 +19,8 @@ class Transaction extends Model
     'confirmed_at',
     'provider_id',
     'estimation',
-    'estimation_type'
+    'estimation_type',
+    'ongkir'
   ];
   public function user() {
     return $this->belongsTo('App\Models\User', 'user_id');
@@ -29,5 +30,8 @@ class Transaction extends Model
   }
   public function detailVouchers() {
     return $this->hasMany('App\Models\TransactionVoucher', 'transaction_id');
+  }
+  public function coins() {
+    return $this->hasMany('App\Models\UserCoin', 'transaction_id');
   }
 }

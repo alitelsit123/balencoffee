@@ -25,8 +25,8 @@
             <div class="small-box text-bg-primary">
               <div class="inner">
                 <h3>
-                  {{auth()->user()->activeCoins()->sum('amount')}}
-                  <small class="font-style: italic;">({{auth()->user()->pendingCoins()->sum('amount')}} Pending)</small>
+                  {{number_format(auth()->user()->activeCoins()->sum('amount'))}}
+                  <small class="font-style: italic;">({{number_format(auth()->user()->pendingCoins()->sum('amount'))}} Pending)</small>
                 </h3>
                 <p>Koin Didapatkan</p>
               </div>

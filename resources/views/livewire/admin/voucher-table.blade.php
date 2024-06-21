@@ -21,7 +21,7 @@
         <td>{{$row->type}}</td>
         <td>{{$row->stock == '-1' ? 'Unlimited': $row->stock}}</td>
         <td>{{$row->amount}} ({{$row->amount_type}})</td>
-        <td>{{$row->expired_at ? $row->expired_at->format('d, F Y'): 'Unlimited'}}</td>
+        <td>{{$row->expired_at ? \Carbon\Carbon::parse($row->expired_at)->format('d, F Y'): 'Unlimited'}}</td>
         <td>
           <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#update-modal" @click="$wire.setUpdate({{$row->id}})">Ubah</button>
           <button type="button" class="btn btn-sm btn-danger" data-id="{{$row->id}}" @click='
@@ -101,7 +101,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" wire:click="store()">Save changes</button>
+          <button type="button" class="btn btn-primary" wire:click="update()">Save changes</button>
         </div>
       </div>
     </div>
