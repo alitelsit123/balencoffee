@@ -34,17 +34,18 @@
                     <td class="align-middle">
                         <div class="input-group quantity mx-auto" style="width: 100px;">
                             <div class="input-group-btn">
-                                <button class="btn btn-sm btn-primary btn-minus" wire:click="uQuantity({{$row->id}},-1)">
+                                <button class="btn btn-sm btn-primary btn-minus" wire:click="uQuantity({{$row->id}},-1)" wire:key="uQuantity{{$row->id}}">
                                 <i class="fa fa-minus"></i>
                                 </button>
                             </div>
                             <span class="form-control form-control-sm bg-secondary text-center">{{number_format($row->quantity)}}</span>
                             <div class="input-group-btn">
-                                <button class="btn btn-sm btn-primary btn-plus" wire:click="uQuantity({{$row->id}},1)">
+                                <button class="btn btn-sm btn-primary btn-plus" wire:click="uQuantity({{$row->id}},1)" wire:key="uQuantity{{$row->id}}">
                                     <i class="fa fa-plus"></i>
                                 </button>
                             </div>
                         </div>
+                        <div class="mt-2" style="font-size: 12px;" wire:loading wire:target="uQuantity({{$row->id}},1)" wire:key="uQuantity{{$row->id}}">Mengupdate ...</div>
                     </td>
                     <td class="align-middle">{{number_format($row->product->price * $row->quantity)}}</td>
                     <td class="align-middle"><button class="btn btn-sm btn-danger" wire:click="deleteCart({{$row->id}})"><i class="fa fa-times"></i></button></td>
@@ -379,7 +380,7 @@
                     $subtotal = ($realsubtotal-$subtotalVoucher);
                     $dcsubtotal += $subtotal;
                     @endphp
-                    @if (auth()->user()->canClaimCashback())
+                    @if (auth()->user()->canClaimCashback($cartItems->sum('subtotal')))
                       <hr class="my-1" />
                       <small class="mb-2 d-block">Voucher Member Permanent</small>
                       <div class="d-flex justify-content-between">

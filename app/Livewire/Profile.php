@@ -17,6 +17,14 @@ class Profile extends Component
   public $genderCreate;
   public $addressCreate;
   public $addressLatlngCreate;
+  public function updateLatlng($latlng) {
+    $user = auth()->user();
+    if (!auth()->user()->address_latlng) {
+      $user->address_latlng = $latlng;
+      $user->save();
+      $this->dispatch('reloadbrowser');
+    }
+  }
   public function acceptOrder($id) {
     $tx = \App\Models\Transaction::findOrFail($id);
     $tx->status = 'settlement';

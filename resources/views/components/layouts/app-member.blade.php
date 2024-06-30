@@ -86,6 +86,9 @@
             icon: 'warning'
           })
         });
+        Livewire.on('reloadbrowser', (event) => {
+          window.location.reload()
+        });
         Livewire.on('payment-success', (event) => {
           $.toast({
             heading: 'Transaksi',

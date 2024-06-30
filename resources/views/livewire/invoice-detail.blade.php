@@ -253,7 +253,7 @@
                                     @if ($transaction->detailVouchers()->whereType('cashback')->sum('amount') > 0)
                                     Cashback<br>
                                     @endif
-                                    @if (auth()->user()->canClaimCashback())
+                                    @if (auth()->user()->canClaimCashback($transaction->subtotal))
                                     Cashback Permanen<br>
                                     @endif
                                     Ongkir<br>
@@ -269,7 +269,7 @@
                                     @if ($transaction->detailVouchers()->whereType('cashback')->sum('amount') > 0)
                                     Rp. {{$transaction->detailVouchers()->whereType('cashback')->sum('amount')}}<br>
                                     @endif
-                                    @if (auth()->user()->canClaimCashback())
+                                    @if (auth()->user()->canClaimCashback($transaction->subtotal))
                                       @if ($transaction->coins()->whereStatus('pending')->whereAmount(defaultCashback($transaction->subtotal))->first())
                                       Rp. {{number_format($transaction->coins()->whereStatus('pending')->whereAmount(defaultCashback($transaction->subtotal))->first()->amount)}}<br>
                                       @endif

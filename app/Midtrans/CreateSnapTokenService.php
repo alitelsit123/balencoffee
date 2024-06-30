@@ -61,7 +61,7 @@ class CreateSnapTokenService extends Midtrans
     public function getStatus() {
       try {
         $status = \Midtrans\Transaction::status($this->transaction->provider_id);
-        if ($status->transaction_status == 'pending') {
+        if ($status->transaction_status == 'settlement') {
           if ($this->transaction->status == 'pending') {
             $this->transaction->status = 'waiting';
             $this->transaction->save();

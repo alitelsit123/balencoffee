@@ -42,8 +42,18 @@ function ongkir($user) {
   return $ongkirResult; // This is the distance in kilometers
 }
 function defaultCashback($total) {
+  $cb = config('services.cashback.amount');
   if (config('services.cashback.type') == 'percent') {
-    return round(($total*config('services.cashback.amount'))/100);
+    $cb = round(($total*config('services.cashback.amount'))/100);
   }
-  return config('services.cashback.amount');
+
+  // Additional cashback for multiples of 50,000
+  if (config('services.cashback.rule_type') == 'kelipatan') {
+    $increment = 50000;
+    if ($total > $increment) {
+      $multiples = floor($total / $increment); // Calculate how many 50,000 multiples are there
+      $cb = $multiples * $cb; // Multiply the base cashback by the number of multiples
+    }
+  }
+  return $cb;
 }

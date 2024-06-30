@@ -3,10 +3,11 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>AdminLTE v4 | Dashboard</title><!--begin::Primary Meta Tags-->
+    <title>Balen Coffee</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="title" content="AdminLTE v4 | Dashboard">
     <meta name="author" content="ColorlibHQ">
+    <link rel="icon" href="{{url('/')}}/assets/img/AdminLTELogo.png" type="image/png">
     <meta name="description" content="AdminLTE is a Free Bootstrap 5 Admin Dashboard, 30 example pages using Vanilla JS.">
     <meta name="keywords" content="bootstrap 5, bootstrap, bootstrap 5 admin dashboard, bootstrap 5 dashboard, bootstrap 5 charts, bootstrap 5 calendar, bootstrap 5 datepicker, bootstrap 5 tables, bootstrap 5 datatable, vanilla js datatable, colorlibhq, colorlibhq dashboard, colorlibhq admin dashboard"><!--end::Primary Meta Tags--><!--begin::Fonts-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.0.12/index.css" integrity="sha256-tXJfXfp6Ewt1ilPzLDtQnJV4hclT9XuaZUKyUvmyr+Q=" crossorigin="anonymous"><!--end::Fonts--><!--begin::Third Party Plugin(OverlayScrollbars)-->
@@ -24,32 +25,7 @@
 
 <body class="layout-fixed sidebar-expand-lg bg-body-tertiary"> <!--begin::App Wrapper-->
     <div class="app-wrapper"> <!--begin::Header-->
-        <nav class="app-header navbar navbar-expand bg-body"> <!--begin::Container-->
-            <div class="container-fluid"> <!--begin::Start Navbar Links-->
-                <ul class="navbar-nav">
-                    <li class="nav-item"> <a class="nav-link" data-lte-toggle="sidebar" href="#" role="button"> <i class="bi bi-list"></i> </a> </li>
-                </ul> <!--end::Start Navbar Links--> <!--begin::End Navbar Links-->
-                <ul class="navbar-nav ms-auto"> <!--begin::Navbar Search-->
-                    <li class="nav-item"> <a class="nav-link" data-widget="navbar-search" href="#" role="button"> <i class="bi bi-search"></i> </a> </li> <!--end::Navbar Search--> <!--begin::Messages Dropdown Menu-->
-                    <li class="nav-item dropdown"> <a class="nav-link" data-bs-toggle="dropdown" href="#"> <i class="bi bi-bell-fill"></i> <span class="navbar-badge badge text-bg-warning">{{auth()->user()->unreadNotifications()->count()}}</span> </a>
-                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end"> <span class="dropdown-item dropdown-header">{{auth()->user()->unreadNotifications()->count()}} Notifikasi</span>
-                            <div class="dropdown-divider"></div>
-                            @foreach (auth()->user()->unreadNotifications as $row)
-                            <a href="{{url('admin/transaction')}}" class="dropdown-item">
-                              Ada pesanan baru #{{$row->data['transaction_id']}}
-                              <span class="float-end text-secondary fs-7">{{$row->created_at->diffForHumans()}}</span>
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            @endforeach
-                            <a href="{{url('admin/transaction')}}" class="dropdown-item dropdown-footer">
-                                See All Notifications
-                            </a>
-                        </div>
-                    </li> <!--end::Notifications Dropdown Menu--> <!--begin::Fullscreen Toggle-->
-                    <li class="nav-item"> <a class="nav-link" href="#" data-lte-toggle="fullscreen"> <i data-lte-icon="maximize" class="bi bi-arrows-fullscreen"></i> <i data-lte-icon="minimize" class="bi bi-fullscreen-exit" style="display: none;"></i> </a> </li> <!--end::Fullscreen Toggle--> <!--begin::User Menu Dropdown-->
-                </ul> <!--end::End Navbar Links-->
-            </div> <!--end::Container-->
-        </nav> <!--end::Header--> <!--begin::Sidebar-->
+        <livewire:navbar-admin>
         <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark"> <!--begin::Sidebar Brand-->
             <div class="sidebar-brand"> <!--begin::Brand Link-->
               <a href="./index.html" class="brand-link"> <!--begin::Brand Image-->
@@ -132,25 +108,57 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha256-whL0tQWoY1Ku1iskqPFvmZ+CHsvmRWx/PIoEvIeWh4I=" crossorigin="anonymous"></script> <!--end::Required Plugin(popperjs for Bootstrap 5)--><!--begin::Required Plugin(Bootstrap 5)-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha256-YMa+wAM6QkVyz999odX7lPRxkoYAan8suedu4k2Zur8=" crossorigin="anonymous"></script> <!--end::Required Plugin(Bootstrap 5)--><!--begin::Required Plugin(AdminLTE)-->
     <script src="{{url('/')}}/js/adminlte.js"></script> <!--end::Required Plugin(AdminLTE)--><!--begin::OverlayScrollbars Configure-->
+    {{-- <audio id="notif-audio" src="{{url('/')}}/notif.wav" muted wire:ignore></audio> --}}
+    {{-- <button class="tt" onclick="document.getElementById('notif-audio').play()">asdf</button> --}}
+    <button id="audio-permission-button" style="display: none;">Enable Sound</button>
     @livewireScripts
     <script>
       document.addEventListener('livewire:init', () => {
-         Livewire.on('alert-success', (event) => {
+        var audio = new Audio('{{url('/')}}/notif.wav');
+        // audio.play();
+        audio.load();
+        audio.muted = true;
+        //  console.log(audio)
+        function requestAudioPermission(audiod) {
+            // Play the audio to request permission (muted)
+          audiod.play().then(() => {
+            // Unmute the audiod after playing once
+            // audiod.muted = false;
+            console.log('Audio permission granted');
+          }).catch(error => {
+            console.error('Error granting audio permission:', error);
+          });
+        }
+        Livewire.on('alert-success', (event) => {
           $('.btn-close').click()
           Swal.fire({
             title: "Sukses!",
             text: event.message,
             icon: "success"
           });
-         });
-         Livewire.on('alert-error', (event) => {
+        });
+        Livewire.on('order-received', (event) => {
+          Swal.fire({
+            title: "Pesanan baru!",
+            text: event.message,
+            icon: "success"
+          });
+          audio.play().then(() => {
+            audio.muted = false;
+          }).catch(error => {
+            console.error('Error granting audio permission:', error);
+          });
+        });
+        Livewire.on('alert-error', (event) => {
           $('.btn-close').click()
           Swal.fire({
             title: "Gagal!",
             text: event.message,
             icon: "error"
           });
-         });
+        });
+        document.getElementById('audio-permission-button').addEventListener('click', requestAudioPermission(audio));
+        document.getElementById('audio-permission-button').click();
       });
     </script>
 </body><!--end::Body-->

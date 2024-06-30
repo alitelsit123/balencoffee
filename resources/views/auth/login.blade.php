@@ -24,10 +24,10 @@
 <body>
 
 	<div class="limiter">
-		<div class="container-login100">
+		<div class="container-login100" style="background: #254A4C;">
 			<div class="wrap-login100">
 				<div class="login100-pic js-tilt" data-tilt>
-					<img src="images/img-01.png" alt="IMG">
+					<img src="{{url('auth')}}/images/img-01.png" alt="IMG">
 				</div>
 
 				<form class="login100-form validate-form" method="POST" action="{{url('login')}}">
@@ -58,7 +58,7 @@
           <div style="color: red;">{{$message}}</div>
           @enderror
 					<div class="container-login100-form-btn">
-						<button class="login100-form-btn" type="submit">
+						<button class="login100-form-btn" type="submit" style="background: #254A4C;">
 							Login
 						</button>
 					</div>

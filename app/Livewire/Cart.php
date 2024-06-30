@@ -87,7 +87,7 @@ class Cart extends Component
         'transaction_id' => $tx->id
       ]);
 
-      if (auth()->user()->canClaimCashback()) {
+      if (auth()->user()->canClaimCashback($tx->subtotal)) {
         auth()->user()->coins()->create([
           'amount' => defaultCashback($tx->subtotal),
           'description' => 'Coin +'.$cbsubtotal.' from default cashback',
@@ -128,7 +128,11 @@ class Cart extends Component
     $this->dispatch('reloadcart')->self();
   }
   public function uQuantity($id, $quantity) {
-    $existingCart = \App\Models\Cart::whereUser_id(auth()->id())->find($id)->first();
+    $existingCart = \App\Models\Cart::whereUser_id(auth()->id())->find($id);
+    if (($existingCart->quantity + $quantity) < 1) {
+      return;
+    }
+    $existingCart = \App\Models\Cart::whereUser_id(auth()->id())->find($id);
     $existingCart->quantity = $existingCart->quantity + $quantity;
     $existingCart->save();
     $this->dispatch('reloadcart')->self();
