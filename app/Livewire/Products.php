@@ -51,7 +51,7 @@ class Products extends Component
   }
   public function mount() {
     $this->reloadCart();
-    $this->categoryIds = \App\Models\Category::all()->pluck('id')->toArray();
+    $this->categoryIds = [];
   }
   #[On('reloadproducts')]
   public function render()
