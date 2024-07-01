@@ -172,7 +172,7 @@ x-data="{
                                       <td>{{$row->created_at->format('d, F Y H:i:s')}}</td>
                                       <td>{{$row->estimation}} {{$row->estimation_type == 'minute' ? 'menit': 'jam'}}</td>
                                       <td>{{$row->detailProducts->count()}}</td>
-                                      <td>Rp. {{number_format($row->detailVouchers()->whereType('cashback')->sum('amount'))}}</td>
+                                      <td>Rp. {{number_format($row->coins()->sum('amount'))}}</td>
                                       <td>Rp. {{number_format($row->detailVouchers()->whereType('discount')->sum('amount'))}}</td>
                                       <td>Rp. {{number_format($row->total)}}</td>
                                       <td>
