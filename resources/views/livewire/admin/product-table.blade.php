@@ -63,7 +63,7 @@
         </tr>
         @empty
         <tr>
-          <td colspan="3">Belum ada produk</td>
+          <td colspan="3">Belum ada menu</td>
         </tr>
         @endforelse
       </tbody>
@@ -79,7 +79,7 @@
         <div class="modal-body">
           <div class="form-group mb-3">
             <label for="exampleFormControlInput1" class="form-label">Nama</label>
-            <input type="text" wire:model="nameCreate" class="form-control" placeholder="Nama produk" />
+            <input type="text" wire:model="nameCreate" class="form-control" placeholder="Nama menu" />
             @error('nameCreate')
             <small style="color: red;">{{ $message }}</small>
             @enderror

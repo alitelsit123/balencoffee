@@ -3,13 +3,13 @@
       <div class="container-fluid"> <!--begin::Row-->
           <div class="row">
               <div class="col-sm-6">
-                  <h3 class="mb-0">Produk</h3>
+                  <h3 class="mb-0">Menu</h3>
               </div>
               <div class="col-sm-6">
                   <ol class="breadcrumb float-sm-end">
                       <li class="breadcrumb-item"><a href="#">Home</a></li>
                       <li class="breadcrumb-item active" aria-current="page">
-                          Produk
+                          Menu
                       </li>
                   </ol>
               </div>
@@ -21,13 +21,13 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="create-modalLabel">Buat Produk</h5>
+          <h5 class="modal-title" id="create-modalLabel">Buat Menu</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <div class="form-group mb-3">
             <label for="exampleFormControlInput1" class="form-label">Nama</label>
-            <input type="text" wire:model="nameCreate" class="form-control" placeholder="Nama produk" />
+            <input type="text" wire:model="nameCreate" class="form-control" placeholder="Nama Menu" />
             @error('nameCreate')
             <small style="color: red;">{{ $message }}</small>
             @enderror
@@ -85,7 +85,7 @@
         <div class="card mb-4">
           <div class="card-header">
               <h3 class="card-title">
-                <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#create-modal">Buat Produk</button>
+                <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#create-modal">Tambah Menu</button>
               </h3>
               {{-- <div class="card-tools">
                   <ul class="pagination pagination-sm float-end">
