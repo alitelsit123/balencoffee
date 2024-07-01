@@ -29,6 +29,12 @@ class Profile extends Component
     $tx = \App\Models\Transaction::findOrFail($id);
     $tx->status = 'settlement';
     $tx->save();
+    if ($tx->status == 'settlement') {
+      $tx->coins()->update([
+        'status' => 'settlement'
+      ]);
+      $this->dispatch('alert-success', message: "Transaksi berhasil diselesaikan! Koin telah diberikan!");
+    }
     $this->dispatch('reloadprofile')->self();
   }
   public function update() {
