@@ -19,7 +19,7 @@ class TransactionTableRow extends Component
     $this->tx->save();
   }
   public function updatedStatus() {
-    if ($this->status == 'settlement' && $this->tx->user->canClaimCashback()) {
+    if ($this->status == 'settlement' && $this->tx->user->canClaimCashback($this->tx->subtotal)) {
       $this->tx->user->update([
         'last_cashback_at' => now()
       ]);

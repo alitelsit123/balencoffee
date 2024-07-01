@@ -61,6 +61,7 @@ class User extends Authenticatable
         $query->whereDate('expired_at', '>', now())->orWhereNull('expired_at');
       });
     });
+    // return $this->belongsToMany('App\Models\Voucher', 'user_vouchers', 'user_id', 'voucher_id')->withTimestamps()->withPivot('used_at');
    }
    public function carts() {
     return $this->hasMany('App\Models\Cart', 'user_id');
@@ -79,7 +80,8 @@ class User extends Authenticatable
    }
 
   //  ===================================================
-   public function canClaimCashback() {
-    return (!auth()->user()->last_cashback_at && auth()->user()->transactions()->whereStatus('settlement')->count() >= 3) || (auth()->user()->last_cashback_at && auth()->user()->transactions()->whereStatus('settlement')->whereDate('created_at', '>', auth()->user()->last_cashback_at)->count() >= 3);
+   public function canClaimCashback($total) {
+    return $total >= 50000;
+    // return (!auth()->user()->last_cashback_at && auth()->user()->transactions()->whereStatus('settlement')->count() >= 3) || (auth()->user()->last_cashback_at && auth()->user()->transactions()->whereStatus('settlement')->whereDate('created_at', '>', auth()->user()->last_cashback_at)->count() >= 3);
    }
 }

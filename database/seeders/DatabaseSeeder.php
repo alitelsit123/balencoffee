@@ -13,13 +13,20 @@ class DatabaseSeeder extends Seeder
   public function run(): void
   {
     // \App\Models\User::factory(10)->create();
-    \App\Models\User::query()->whereEmail('admin@gmail.com')->delete();
+    \App\Models\User::query()->delete();
     \App\Models\User::create([
       'name' => 'admin',
       'email' => 'admin@gmail.com',
       'phone' => '089000000000',
       'role' => 'admin',
       'password' => \Hash::make('admin')
+    ]);
+    \App\Models\User::create([
+      'name' => 'memebr',
+      'email' => 'member@gmail.com',
+      'phone' => '089000000000',
+      'role' => 'member',
+      'password' => \Hash::make('member')
     ]);
     \App\Models\Voucher::query()->delete();
     \App\Models\Voucher::create([

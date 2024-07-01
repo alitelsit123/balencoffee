@@ -49,10 +49,10 @@
       </div>
       <div class="col-lg-4 col-6 text-right">
         <div class="w-100 d-flex align-items-center justify-content-end">
-          <a href="#" class="btn border">
+          {{-- <a href="#" class="btn border">
               <i class="fas fa-bell text-white"></i>
               <span class="badge text-white">0</span>
-          </a>
+          </a> --}}
           <a href="{{url('cart')}}" class="btn border" wire:navigate>
               <i class="fas fa-shopping-cart text-white"></i>
               <span class="badge text-white"

@@ -32,8 +32,9 @@ return [
     ],
 
     'cashback' => [
-      'type' => 'percent',
-      'amount' => 50
+      'rule_type' => 'kelipatan',
+      'type' => 'rupiah',
+      'amount' => 5000
     ]
 
 ];

@@ -1,4 +1,21 @@
-<div class="">
+<div class=""
+x-data="{
+  init() {
+    fetch('https://ipinfo.io/json?token=94c2ee883ce831')
+    .then(response => response.json())
+    .then(data => {
+      var loc = data.loc.split(',');
+      var latitude = loc[0];
+      var longitude = loc[1];
+      $wire.updateLatlng(latitude+','+longitude)
+    })
+    .catch(error => {
+      console.log(error)
+      alert('Error fetching location.')
+    });
+  }
+}"
+>
   {{-- <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch@3.1.0/dist/geosearch.css"/>

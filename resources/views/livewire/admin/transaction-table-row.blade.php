@@ -111,7 +111,7 @@
                                         @if ($tx->detailVouchers()->whereType('cashback')->sum('amount') > 0)
                                         Cashback<br>
                                         @endif
-                                        @if (auth()->user()->canClaimCashback())
+                                        @if (auth()->user()->canClaimCashback($tx->subtotal))
                                         Cashback Permanen<br>
                                         @endif
                                       </p>
@@ -126,7 +126,7 @@
                                         @if ($tx->detailVouchers()->whereType('cashback')->sum('amount') > 0)
                                         Rp. {{$tx->detailVouchers()->whereType('cashback')->sum('amount')}}<br>
                                         @endif
-                                        @if (auth()->user()->canClaimCashback())
+                                        @if (auth()->user()->canClaimCashback($tx->subtotal))
                                         Rp. {{number_format(defaultCashback($tx->subtotal))}}<br>
                                         @endif
                                       </p>
