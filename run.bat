@@ -14,8 +14,8 @@ timeout /t 10
 
 echo "Starting project..."
 cd /d "C:\xampp\htdocs\balencoffee"
-start cmd /k "php artisan serve"
+start cmd /k "php artisan serve --host=balencoffee.test --port=80"
 
 echo "Opening Browser..."
 timeout /t 1
-start http://localhost:8000
+start http://balencoffee.test
