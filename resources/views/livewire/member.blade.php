@@ -29,8 +29,6 @@
                           <img class="img-fluid" src="{{url('assets')}}/img/BALENN.jpg" alt="Image">
                           <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                               <div class="p-3" style="max-width: 700px;">
-                                  <h4 class="text-light text-uppercase font-weight-medium mb-3">Balen Coffee</h4>
-                                  <a href="#" class="btn btn-light py-2 px-3">Order Sekarang</a>
                               </div>
                           </div>
                       </div>
@@ -38,9 +36,7 @@
                           <img class="img-fluid" src="{{url('assets')}}/img/BALEN.jpg" alt="Image">
                           <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                               <div class="p-3" style="max-width: 700px;">
-                                  <h4 class="text-light text-uppercase font-weight-medium mb-3">Cashback 50% </h4>
                                   {{-- <h3 class="display-4 text-white font-weight-semi-bold mb-4">Reasonable Price</h3> --}}
-                                  <a href="#" class="btn btn-light py-2 px-3">Order Sekarang</a>
                               </div>
                           </div>
                       </div>
@@ -76,20 +72,20 @@
               alt="" srcset="" style="width: 40px; height: 40px" />
             </div>
             <div class="p-2" style="border-left: 1px solid #00000033;border-right: 1px solid #00000033">
-              <div style="font-size: 18px;color: black;">Member Baru</div>
+              <div style="font-size: 18px;color: black;">Loyal members</div>
               <div class="" style="
                 font-size: 18px;
                 font-weight: bold;
                 color: black;
-              ">Potongan 10RB</div>
+              ">Cashback 5RB</div>
               {{-- <a href="#" style="color: red;text-decoration: underline;">
                 <i class="fas fa-info-circle mr-2" aria-hidden="true"></i>
-                <small>*Syarat dan ketentuan berlaku</small>
+                <small>*Transaksi minimal 50.000, berlaku kelipatan</small>
               </a> --}}
               <hr class="my-2" />
               <div class="d-flex align-items-center">
                 <i class="fas fa-clock mr-2" aria-hidden="true"></i>
-                <small style="color: red">-</small>
+                <small style="color: red">Agustus 2024</small>
               </div>
             </div>
             <button type="button" class="p-4 d-flex align-items-center justify-content-center" style="font-weight: bold;border-top-right-radius: 8px;border-bottom-right-radius: 8px;background:rgb(0 0 0 / 0.2);border: 0;color: gray">

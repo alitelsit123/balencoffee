@@ -285,20 +285,20 @@
                   </div>
                   <div class="p-2 w-100" style="border-left: 1px solid #00000033;border-right: 1px solid #00000033">
                     <div class="d-flex align-items-center justify-content-between w-100">
-                      <div style="font-size: 18px;color: black;">Cashback 50%</div>
+                      <div style="font-size: 18px;color: black;">Cashback 5.000</div>
                       <div class="" style="
                         font-size: 18px;
                         font-weight: bold;
                         color: black;
-                      ">BALENCB50</div>
+                      ">BALENCB5</div>
                     </div>
                     {{-- <a href="#" style="color: red;text-decoration: underline;">
                       <i class="fas fa-info-circle mr-2" aria-hidden="true"></i>
-                      <small>*Syarat dan ketentuan berlaku</small>
+                      <small>*Transaksi minimal 50.000</small>
                     </a> --}}
                     <hr class="my-2" />
                     <div class="d-flex align-items-center mb-1">
-                      <small style="color: red">* Minimum pembelian 3</small>
+                      <small style="color: red">*Berlaku kelipatan</small>
                     </div>
                     <hr class="my-2" />
                     <div class="d-flex align-items-center">
@@ -384,7 +384,7 @@
                       <hr class="my-1" />
                       <small class="mb-2 d-block">Voucher Member Permanent</small>
                       <div class="d-flex justify-content-between">
-                        <h6 class="font-weight-medium"><strong>BALENCB50</strong></h6>
+                        <h6 class="font-weight-medium"><strong>BALENCB5</strong></h6>
                         <h6 class="font-weight-medium">Cashback Rp. {{number_format(defaultCashback($subtotalVoucher))}}</h6>
                       </div>
                     @endif
