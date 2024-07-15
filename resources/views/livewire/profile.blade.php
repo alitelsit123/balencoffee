@@ -11,7 +11,6 @@ x-data="{
     })
     .catch(error => {
       console.log(error)
-      alert('Error fetching location.')
     });
   }
 }"
