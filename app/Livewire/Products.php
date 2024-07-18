@@ -61,7 +61,7 @@ class Products extends Component
       $query->where('name', 'like', '%'.request('search').'%');
     })->when(sizeof($this->categoryIds) > 0, function($query) use ($categoryIdsR) {
       $query->whereIn('category_id', $categoryIdsR);
-    })->paginate(9);
+    })->where('status','enabled')->paginate(9);
 
     // dd(sizeof($this->categoryIds));
     return view('livewire.products',compact('products'))->layout('components.layouts.app-member');
