@@ -111,7 +111,14 @@
                               </div>
                             </div>
                             @else
-                            <button type="button" class="btn btn-sm text-dark p-0" wire:click="addToCart({{$row->id}},1)" wire:loading.remove wire:key="addToCart{{$row->id}}" wire:target="addToCart({{$row->id}},1)">
+                            <button type="button" class="btn btn-sm text-dark p-0"
+                            @if ($row->status == 'enabled')
+                            wire:click="addToCart({{$row->id}},1)" wire:loading.remove wire:key="addToCart{{$row->id}}" wire:target="addToCart({{$row->id}},1)"
+                            @else
+                            title="Produk Tidak Bisa Dipesan"
+                            disabled
+                            @endif
+                            >
                               <i class="fas fa-shopping-cart text-primary mr-1"></i>Tambah Cart
                             </button>
                             <div wire:key="addToCart{{$row->id}}" wire:loading wire:target="addToCart({{$row->id}},1)">

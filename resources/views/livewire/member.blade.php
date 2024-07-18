@@ -256,7 +256,7 @@
       <h2 class="section-title px-5"><span class="px-2">Menu Book</span></h2>
     </div>
     <div class="row px-xl-5 pb-3">
-      @foreach (\App\Models\Product::where('status','enabled')->take(8)->latest()->get() as $row)
+      @foreach (\App\Models\Product::take(8)->latest()->get() as $row)
       <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
         <div class="card product-item border-0 mb-4">
             <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
@@ -289,7 +289,15 @@
                         @if (in_array($row->id, $product_carts))
                         <button type="button" class="btn btn-default">Sudah Ditambah</button>
                         @else
-                        <button type="button" class="btn btn-primary" wire:click="addToCart({{$row->id}},1)" wire:loading.remove wire:key="addToCartm{{$row->id}}" wire:target="addToCart({{$row->id}},1)">Tambah Cart</button>
+
+                        <button type="button" class="btn btn-primary"
+                        @if ($row->status == 'enabled')
+                        wire:click="addToCart({{$row->id}},1)" wire:loading.remove wire:key="addToCartm{{$row->id}}" wire:target="addToCart({{$row->id}},1)"
+                        @else
+                        title="Produk Tidak Bisa Dipesan"
+                        disabled
+                        @endif
+                        >Tambah Cart</button>
                         <div wire:key="addToCartm{{$row->id}}" wire:loading wire:target="addToCart({{$row->id}},1)">
                           <div class="spinner-border" role="status">
                             <span class="sr-only">Loading...</span>
@@ -311,7 +319,14 @@
                     </div>
                   </div>
                   @else
-                  <button type="button" class="btn btn-sm text-dark p-0" wire:click="addToCart({{$row->id}},1)" wire:loading.remove wire:key="addToCart{{$row->id}}" wire:target="addToCart({{$row->id}},1)">
+                  <button type="button" class="btn btn-sm text-dark p-0"
+                  @if ($row->status == 'enabled')
+                  wire:click="addToCart({{$row->id}},1)" wire:loading.remove wire:key="addToCart{{$row->id}}" wire:target="addToCart({{$row->id}},1)"
+                  @else
+                  title="Produk Tidak Bisa Dipesan"
+                  disabled
+                  @endif
+                  >
                     <i class="fas fa-shopping-cart text-primary mr-1"></i>Tambah Cart
                   </button>
                   <div wire:key="addToCart{{$row->id}}" wire:loading wire:target="addToCart({{$row->id}},1)">
