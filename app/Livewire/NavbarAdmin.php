@@ -8,7 +8,7 @@ class NavbarAdmin extends Component
 {
   public function render()
   {
-    if (auth()->user()->unreadNotifications()->count() > 0) {
+    if (auth()->user() && auth()->user()->unreadNotifications()->count() > 0) {
       $this->dispatch('order-received', message: '1 Pesanan masuk');
       auth()->user()->unreadNotifications->markAsRead();
     }
